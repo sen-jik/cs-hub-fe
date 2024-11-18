@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
-import Head from "next/head";
+import type { Metadata } from 'next';
+import Head from 'next/head';
 // import localFont from "next/font/local";
-import "./globals.css";
+import './globals.css';
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -10,10 +10,10 @@ import "./globals.css";
 // });
 
 export const metadata: Metadata = {
-  title: "CS Hub | 퀴즈로 준비하는 테크 인터뷰",
-  description: "퀴즈로 준비하는 테크 인터뷰 - CS Hub",
+  title: 'CS Hub | 퀴즈로 준비하는 테크 인터뷰',
+  description: '퀴즈로 준비하는 테크 인터뷰 - CS Hub',
   icons: {
-    icon: "/logo/favicon.svg",
+    icon: '/logo/favicon.svg',
   },
 };
 
