@@ -1,0 +1,39 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+PROJECT_PATH="cs-hub-fe"
+
+echo ""
+echo "🔍 $PROJECT_PATH 프로젝트 검사 중..."
+echo ""
+
+# 전체 스테이징된 파일이 있는지 확인
+ALL_STAGED_FILES=$(git diff --cached --name-only)
+
+if [ -z "$ALL_STAGED_FILES" ]; then
+    echo "❌ 스테이징된 파일이 없습니다. 커밋할 파일을 추가하세요."
+    exit 1
+fi
+
+# src 하위 폴더의 스테이징된 파일만 선택
+SRC_STAGED_FILES=$(git diff --cached --name-only -- src/)
+
+if [ -n "$SRC_STAGED_FILES" ]; then
+    echo "🔍 src 하위 폴더의 파일을 검사합니다..."
+    npx lint-staged
+    if [ $? -ne 0 ]; then
+        echo ""
+        echo "❌ src 하위 폴더의 pre-commit 검사 중 오류가 발생했습니다."
+        echo "💡 오류를 해결한 뒤 다시 커밋을 시도하세요."
+        echo ""
+        exit 1
+    fi
+else
+    echo "ℹ️ src 하위 폴더의 스테이징된 파일이 없어 검사를 건너뜁니다."
+fi
+
+echo ""
+echo "✅ pre-commit 검사가 성공적으로 완료되었습니다!"
+echo ""
+exit 0
+fi
