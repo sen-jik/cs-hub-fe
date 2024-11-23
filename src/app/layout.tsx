@@ -1,6 +1,7 @@
-import type { Metadata } from 'next';
 import Head from 'next/head';
+import type { Metadata } from 'next';
 // import localFont from "next/font/local";
+
 import './globals.css';
 
 // const geistSans = localFont({
@@ -17,11 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <Head>
@@ -53,4 +50,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
