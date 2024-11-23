@@ -9,13 +9,19 @@
     "lint": "next lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "fetch-swagger": "fetch-swagger --url https://dev-api.cshub.kr/docs-json --username admin --password admin",
+    "generate-all": "generate-all --uri https://dev-api.cshub.kr/docs-json --username admin --password admin"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.61.0",
     "dayjs": "^1.11.13",
+    "ky": "^1.7.2",
     "next": "15.0.3",
+    "prettier-plugin-tailwindcss": "^0.6.9",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "ts-pattern": "^5.5.0",
     "zustand": "^5.0.1"
   },
   "devDependencies": {
@@ -53,3 +59,4 @@
     ]
   }
 }
+
