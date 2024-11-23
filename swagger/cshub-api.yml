@@ -1,0 +1,96 @@
+openapi: 3.0.0
+paths:
+  /users:
+    get:
+      operationId: UserController_getUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - User
+  /users/{id}:
+    get:
+      operationId: UserController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            $ref: '#/components/schemas/FindUserReqDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/FindUserResDto'
+      tags:
+        - User
+  /auth/kakao/login:
+    get:
+      operationId: AuthController_kakaoRedirect
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Auth
+  /auth/kakao/callback:
+    get:
+      operationId: AuthController_getKakaoInfo
+      parameters:
+        - name: code
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Auth
+  /point:
+    get:
+      operationId: PointController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Point
+info:
+  title: CSHub API
+  description: CSHub API description
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    FindUserReqDto:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+    FindUserResDto:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - id
+        - email
+        - createdAt
