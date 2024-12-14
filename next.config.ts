@@ -26,15 +26,14 @@ const nextConfig: NextConfig = {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     if (process.env.NODE_ENV === 'development') {
       return [
-        { 
-          source: '/be/:path*',
-          destination: `${baseUrl}/be:path*`,
+        {
+          source: '/api/v1/:path*',
+          destination: `${baseUrl}/api/v1:path*`,
         },
       ];
     }
     return [];
   },
-  
 };
 
 export default nextConfig;
