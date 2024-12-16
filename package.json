@@ -10,8 +10,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
     "pre-commit": "lint-staged",
-    "fetch-swagger": "fetch-swagger --url https://dev-api.cshub.kr/docs-json --username admin --password admin",
-    "generate-all": "generate-all --uri https://dev-api.cshub.kr/docs-json --username admin --password admin"
+    "fetch-swagger": "dotenv -e .env -- sh -c 'fetch-swagger --url \"$NEXT_PUBLIC_SWAGGER_URL\" --username \"$NEXT_PUBLIC_SWAGGER_USERNAME\" --password \"$NEXT_PUBLIC_SWAGGER_PASSWORD\"'",
+    "generate-all": "dotenv -e .env -- sh -c 'generate-all --uri \"$NEXT_PUBLIC_SWAGGER_URL\" --username \"$NEXT_PUBLIC_SWAGGER_USERNAME\" --password \"$NEXT_PUBLIC_SWAGGER_PASSWORD\"'"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.61.0",
@@ -32,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
     "@vercel/style-guide": "^6.0.0",
+    "dotenv-cli": "^7.4.4",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
