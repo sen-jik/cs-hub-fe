@@ -43,10 +43,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           crossOrigin="anonymous"
         />
       </Head>
-      <body
-      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className="flex h-full items-center justify-center bg-gray-50">
+        {/* 정중앙 고정된 500px 박스 */}
+        <div className="h-[100vh] w-full max-w-[500px] bg-white p-4">{children}</div>
       </body>
     </html>
   );
