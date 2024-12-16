@@ -9,25 +9,25 @@ import {
 import { pointApi } from './instance';
 
 export const POINT_QUERY_KEY = {
-  GET_POINT: () => ['point'],
+  GET_V1_POINT: () => ['v1', 'point'],
 };
 
 const queries = {
-  getPoint: () => ({
-    queryKey: POINT_QUERY_KEY.GET_POINT(),
-    queryFn: () => pointApi.getPoint(),
+  getApiV1Point: () => ({
+    queryKey: POINT_QUERY_KEY.GET_V1_POINT(),
+    queryFn: () => pointApi.getApiV1Point(),
   }),
 };
 
 // ---------------------- Query ------------------------------
 /**
  * @tags Point
- * @request GET:/point */
-export const useGetPointQuery = <TData = void>(
+ * @request GET:/api/v1/point */
+export const useGetApiV1PointQuery = <TData = void>(
   options?: Omit<UseQueryOptions<void, DefaultError, TData>, 'queryKey' | 'queryFn'>
 ) => {
   return useQuery({
-    ...queries.getPoint(),
+    ...queries.getApiV1Point(),
     ...options,
   });
 };
@@ -35,12 +35,12 @@ export const useGetPointQuery = <TData = void>(
 // ------------------ Suspense Query --------------------------
 /**
  * @tags Point
- * @request GET:/point */
-export const useGetPointSuspenseQuery = <TData = void>(
+ * @request GET:/api/v1/point */
+export const useGetApiV1PointSuspenseQuery = <TData = void>(
   options?: Omit<UseSuspenseQueryOptions<void, DefaultError, TData>, 'queryKey' | 'queryFn'>
 ) => {
   return useSuspenseQuery({
-    ...queries.getPoint(),
+    ...queries.getApiV1Point(),
     ...options,
   });
 };

@@ -1,6 +1,6 @@
 openapi: 3.0.0
 paths:
-  /users:
+  /api/v1/users:
     get:
       operationId: UserController_getUsers
       parameters: []
@@ -9,7 +9,7 @@ paths:
           description: ''
       tags:
         - User
-  /users/{id}:
+  /api/v1/users/{id}:
     get:
       operationId: UserController_findOne
       parameters:
@@ -28,7 +28,94 @@ paths:
                   - $ref: '#/components/schemas/FindUserResDto'
       tags:
         - User
-  /auth/kakao/login:
+  /api/v1/likes/{type}/{id}:
+    post:
+      operationId: LikeController_toggleLike
+      parameters:
+        - name: type
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      tags:
+        - Like
+  /api/v1/categories:
+    post:
+      operationId: CategoryController_createSubCategory
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSubCategoryReqDto'
+      responses:
+        '201':
+          description: ''
+      security:
+        - bearer: []
+      tags:
+        - Category
+  /api/v1/interviews:
+    post:
+      operationId: InterviewController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInterviewReqDto'
+      responses:
+        '201':
+          description: ''
+      security:
+        - bearer: []
+      tags:
+        - Interview
+    get:
+      operationId: InterviewController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/FindAllInterviewResDto'
+      tags:
+        - Interview
+  /api/v1/interviews/{id}:
+    get:
+      operationId: InterviewController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/FindInterviewInfoWithLikeResDto'
+      tags:
+        - Interview
+  /api/v1/auth/kakao/login:
     get:
       operationId: AuthController_kakaoRedirect
       parameters: []
@@ -37,7 +124,7 @@ paths:
           description: ''
       tags:
         - Auth
-  /auth/kakao/callback:
+  /api/v1/auth/kakao/callback:
     get:
       operationId: AuthController_getKakaoInfo
       parameters:
@@ -51,7 +138,7 @@ paths:
           description: ''
       tags:
         - Auth
-  /point:
+  /api/v1/point:
     get:
       operationId: PointController_findAll
       parameters: []
@@ -94,3 +181,217 @@ components:
         - id
         - email
         - createdAt
+    ToggleLikeResDto:
+      type: object
+      properties:
+        isLiked:
+          type: boolean
+          description: 좋아요 상태
+          example: true
+      required:
+        - isLiked
+    ToggleLikeReqDto:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 좋아요 대상 타입
+          enum:
+            - interview
+            - quiz
+          example: interview
+        targetId:
+          type: number
+          description: 좋아요 대상 ID
+          example: 1
+      required:
+        - type
+        - targetId
+    CreateSubCategoryReqDto:
+      type: object
+      properties:
+        subCategory:
+          type: string
+          description: 서브 카테고리
+          example: NETWORK
+        mainCategory:
+          type: string
+          description: 메인 카테고리
+          example: COMMON
+      required:
+        - subCategory
+        - mainCategory
+    CreateInterviewReqDto:
+      type: object
+      properties:
+        question:
+          type: string
+          description: 질문
+          example: 질문
+        answer:
+          type: string
+          description: 답변
+          example: 답변
+        keywords:
+          description: 키워드
+          example:
+            - 키워드1
+            - 키워드2
+          type: array
+          items:
+            type: string
+        subCategory:
+          type: string
+          description: 서브 카테고리
+          example: NETWORK
+      required:
+        - question
+        - answer
+        - keywords
+        - subCategory
+    CreateInterviewResDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: 인터뷰 ID
+          example: 1
+      required:
+        - id
+    FindInterviewResDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: 인터뷰 ID
+          example: 1
+        question:
+          type: string
+          description: 질문
+          example: HTTP와 HTTPS의 차이점은 무엇인가요?
+      required:
+        - id
+        - question
+    FindInterviewByCategoryResDto:
+      type: object
+      properties:
+        mainCategoryName:
+          type: string
+          description: 메인 카테고리명
+          example: COMMON
+        subCategoryName:
+          type: string
+          description: 서브 카테고리명
+          example: NETWORK
+        interviews:
+          description: 인터뷰 목록
+          type: array
+          items:
+            $ref: '#/components/schemas/FindInterviewResDto'
+      required:
+        - mainCategoryName
+        - subCategoryName
+        - interviews
+    FindAllInterviewResDto:
+      type: object
+      properties:
+        items:
+          description: 카테고리별 인터뷰 목록
+          type: array
+          items:
+            $ref: '#/components/schemas/FindInterviewByCategoryResDto'
+      required:
+        - items
+    FindInterviewInfoResDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: 인터뷰 ID
+          example: 1
+        subCategory:
+          type: object
+          description: 서브 카테고리 정보
+          example:
+            id: 1
+            name: NETWORK
+            main_category: COMMON
+        question:
+          type: string
+          description: 질문
+          example: HTTP와 HTTPS의 차이점은 무엇인가요?
+        answer:
+          type: string
+          description: 답변
+          example: HTTP는 암호화되지 않은 평문 통신이며, HTTPS는 SSL/TLS를 통해 암호화된 통신을 합니다.
+        keywords:
+          description: 키워드 목록
+          example:
+            - HTTP
+            - HTTPS
+            - SSL
+            - TLS
+            - 보안
+          type: array
+          items:
+            type: string
+        createdAt:
+          format: date-time
+          type: string
+          description: 생성일시
+      required:
+        - id
+        - subCategory
+        - question
+        - answer
+        - keywords
+        - createdAt
+    FindInterviewInfoWithLikeResDto:
+      type: object
+      properties:
+        id:
+          type: number
+          description: 인터뷰 ID
+          example: 1
+        subCategory:
+          type: object
+          description: 서브 카테고리 정보
+          example:
+            id: 1
+            name: NETWORK
+            main_category: COMMON
+        question:
+          type: string
+          description: 질문
+          example: HTTP와 HTTPS의 차이점은 무엇인가요?
+        answer:
+          type: string
+          description: 답변
+          example: HTTP는 암호화되지 않은 평문 통신이며, HTTPS는 SSL/TLS를 통해 암호화된 통신을 합니다.
+        keywords:
+          description: 키워드 목록
+          example:
+            - HTTP
+            - HTTPS
+            - SSL
+            - TLS
+            - 보안
+          type: array
+          items:
+            type: string
+        createdAt:
+          format: date-time
+          type: string
+          description: 생성일시
+        isLiked:
+          type: boolean
+          description: 좋아요 여부
+          example: true
+      required:
+        - id
+        - subCategory
+        - question
+        - answer
+        - keywords
+        - createdAt
+        - isLiked

@@ -26,12 +26,12 @@ export class PointApi {
 
   /**
    * @tags Point
-   * @request GET:/point */
-  getPoint(kyInstance?: KyInstance, options?: Options) {
+   * @request GET:/api/v1/point */
+  getApiV1Point(kyInstance?: KyInstance, options?: Options) {
     const instance = kyInstance ?? this.instance;
 
     return instance
-      .get<void>(`point`, {
+      .get<void>(`api/v1/point`, {
         ...options,
       })
       .json();

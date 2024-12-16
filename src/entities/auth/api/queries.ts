@@ -11,8 +11,9 @@ import { AuthControllerGetKakaoInfoQueryParams } from '@/shared/api';
 import { authApi } from './instance';
 
 export const AUTH_QUERY_KEY = {
-  GET_AUTH_KAKAO_LOGIN: () => ['auth', 'kakao', 'login'],
-  GET_AUTH_KAKAO_CALLBACK: (params: AuthControllerGetKakaoInfoQueryParams) => [
+  GET_V1_AUTH_KAKAO_LOGIN: () => ['v1', 'auth', 'kakao', 'login'],
+  GET_V1_AUTH_KAKAO_CALLBACK: (params: AuthControllerGetKakaoInfoQueryParams) => [
+    'v1',
     'auth',
     'kakao',
     'callback',
@@ -21,38 +22,38 @@ export const AUTH_QUERY_KEY = {
 };
 
 const queries = {
-  getAuthKakaoLogin: () => ({
-    queryKey: AUTH_QUERY_KEY.GET_AUTH_KAKAO_LOGIN(),
-    queryFn: () => authApi.getAuthKakaoLogin(),
+  getApiV1AuthKakaoLogin: () => ({
+    queryKey: AUTH_QUERY_KEY.GET_V1_AUTH_KAKAO_LOGIN(),
+    queryFn: () => authApi.getApiV1AuthKakaoLogin(),
   }),
-  getAuthKakaoCallback: (params: AuthControllerGetKakaoInfoQueryParams) => ({
-    queryKey: AUTH_QUERY_KEY.GET_AUTH_KAKAO_CALLBACK(params),
-    queryFn: () => authApi.getAuthKakaoCallback(params),
+  getApiV1AuthKakaoCallback: (params: AuthControllerGetKakaoInfoQueryParams) => ({
+    queryKey: AUTH_QUERY_KEY.GET_V1_AUTH_KAKAO_CALLBACK(params),
+    queryFn: () => authApi.getApiV1AuthKakaoCallback(params),
   }),
 };
 
 // ---------------------- Query ------------------------------
 /**
  * @tags Auth
- * @request GET:/auth/kakao/login */
-export const useGetAuthKakaoLoginQuery = <TData = void>(
+ * @request GET:/api/v1/auth/kakao/login */
+export const useGetApiV1AuthKakaoLoginQuery = <TData = void>(
   options?: Omit<UseQueryOptions<void, DefaultError, TData>, 'queryKey' | 'queryFn'>
 ) => {
   return useQuery({
-    ...queries.getAuthKakaoLogin(),
+    ...queries.getApiV1AuthKakaoLogin(),
     ...options,
   });
 };
 
 /**
  * @tags Auth
- * @request GET:/auth/kakao/callback */
-export const useGetAuthKakaoCallbackQuery = <TData = void>(
+ * @request GET:/api/v1/auth/kakao/callback */
+export const useGetApiV1AuthKakaoCallbackQuery = <TData = void>(
   params: AuthControllerGetKakaoInfoQueryParams,
   options?: Omit<UseQueryOptions<void, DefaultError, TData>, 'queryKey' | 'queryFn'>
 ) => {
   return useQuery({
-    ...queries.getAuthKakaoCallback(params),
+    ...queries.getApiV1AuthKakaoCallback(params),
     ...options,
   });
 };
@@ -60,25 +61,25 @@ export const useGetAuthKakaoCallbackQuery = <TData = void>(
 // ------------------ Suspense Query --------------------------
 /**
  * @tags Auth
- * @request GET:/auth/kakao/login */
-export const useGetAuthKakaoLoginSuspenseQuery = <TData = void>(
+ * @request GET:/api/v1/auth/kakao/login */
+export const useGetApiV1AuthKakaoLoginSuspenseQuery = <TData = void>(
   options?: Omit<UseSuspenseQueryOptions<void, DefaultError, TData>, 'queryKey' | 'queryFn'>
 ) => {
   return useSuspenseQuery({
-    ...queries.getAuthKakaoLogin(),
+    ...queries.getApiV1AuthKakaoLogin(),
     ...options,
   });
 };
 
 /**
  * @tags Auth
- * @request GET:/auth/kakao/callback */
-export const useGetAuthKakaoCallbackSuspenseQuery = <TData = void>(
+ * @request GET:/api/v1/auth/kakao/callback */
+export const useGetApiV1AuthKakaoCallbackSuspenseQuery = <TData = void>(
   params: AuthControllerGetKakaoInfoQueryParams,
   options?: Omit<UseSuspenseQueryOptions<void, DefaultError, TData>, 'queryKey' | 'queryFn'>
 ) => {
   return useSuspenseQuery({
-    ...queries.getAuthKakaoCallback(params),
+    ...queries.getApiV1AuthKakaoCallback(params),
     ...options,
   });
 };

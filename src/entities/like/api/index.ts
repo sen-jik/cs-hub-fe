@@ -1,8 +1,6 @@
 import { KyInstance, Options } from 'ky';
 
-import { AuthControllerGetKakaoInfoQueryParams } from '@/shared/api';
-
-export class AuthApi {
+export class LikeApi {
   private readonly instance: KyInstance;
 
   constructor(instance: KyInstance) {
@@ -27,32 +25,14 @@ export class AuthApi {
   }
 
   /**
-   * @tags Auth
-   * @request GET:/api/v1/auth/kakao/login */
-  getApiV1AuthKakaoLogin(kyInstance?: KyInstance, options?: Options) {
+   * @tags Like
+   * @request POST:/api/v1/likes/{type}/{id}
+   * @secure */
+  postApiV1LikesByTypeById(type: string, id: number, kyInstance?: KyInstance, options?: Options) {
     const instance = kyInstance ?? this.instance;
 
     return instance
-      .get<void>(`api/v1/auth/kakao/login`, {
-        ...options,
-      })
-      .json();
-  }
-
-  /**
-   * @tags Auth
-   * @request GET:/api/v1/auth/kakao/callback */
-  getApiV1AuthKakaoCallback(
-    params: AuthControllerGetKakaoInfoQueryParams,
-    kyInstance?: KyInstance,
-    options?: Omit<Options, 'searchParams'>
-  ) {
-    const instance = kyInstance ?? this.instance;
-    const urlSearchParams = AuthApi.createSearchParams(params);
-
-    return instance
-      .get<void>(`api/v1/auth/kakao/callback`, {
-        searchParams: urlSearchParams,
+      .post<void>(`api/v1/likes/${type}/${id}`, {
         ...options,
       })
       .json();

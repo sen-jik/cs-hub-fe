@@ -1,8 +1,8 @@
 import { KyInstance, Options } from 'ky';
 
-import { AuthControllerGetKakaoInfoQueryParams } from '@/shared/api';
+import { CreateSubCategoryReqDto } from '@/shared/api';
 
-export class AuthApi {
+export class CategoryApi {
   private readonly instance: KyInstance;
 
   constructor(instance: KyInstance) {
@@ -27,32 +27,19 @@ export class AuthApi {
   }
 
   /**
-   * @tags Auth
-   * @request GET:/api/v1/auth/kakao/login */
-  getApiV1AuthKakaoLogin(kyInstance?: KyInstance, options?: Options) {
-    const instance = kyInstance ?? this.instance;
-
-    return instance
-      .get<void>(`api/v1/auth/kakao/login`, {
-        ...options,
-      })
-      .json();
-  }
-
-  /**
-   * @tags Auth
-   * @request GET:/api/v1/auth/kakao/callback */
-  getApiV1AuthKakaoCallback(
-    params: AuthControllerGetKakaoInfoQueryParams,
+   * @tags Category
+   * @request POST:/api/v1/categories
+   * @secure */
+  postApiV1Categories(
+    data: CreateSubCategoryReqDto,
     kyInstance?: KyInstance,
-    options?: Omit<Options, 'searchParams'>
+    options?: Omit<Options, 'json'>
   ) {
     const instance = kyInstance ?? this.instance;
-    const urlSearchParams = AuthApi.createSearchParams(params);
 
     return instance
-      .get<void>(`api/v1/auth/kakao/callback`, {
-        searchParams: urlSearchParams,
+      .post<void>(`api/v1/categories`, {
+        json: data,
         ...options,
       })
       .json();

@@ -1,6 +1,6 @@
 import { KyInstance, Options } from 'ky';
 
-import { FindUserReqDtoDto, FindUserResDtoDto } from '@/shared/api';
+import { FindUserReqDto, FindUserResDto } from '@/shared/api';
 
 export class UserApi {
   private readonly instance: KyInstance;
@@ -28,12 +28,12 @@ export class UserApi {
 
   /**
    * @tags User
-   * @request GET:/users */
-  getUsers(kyInstance?: KyInstance, options?: Options) {
+   * @request GET:/api/v1/users */
+  getApiV1Users(kyInstance?: KyInstance, options?: Options) {
     const instance = kyInstance ?? this.instance;
 
     return instance
-      .get<void>(`users`, {
+      .get<void>(`api/v1/users`, {
         ...options,
       })
       .json();
@@ -41,12 +41,12 @@ export class UserApi {
 
   /**
    * @tags User
-   * @request GET:/users/{id} */
-  getUsersById(id: FindUserReqDtoDto, kyInstance?: KyInstance, options?: Options) {
+   * @request GET:/api/v1/users/{id} */
+  getApiV1UsersById(id: FindUserReqDto, kyInstance?: KyInstance, options?: Options) {
     const instance = kyInstance ?? this.instance;
 
     return instance
-      .get<FindUserResDtoDto>(`users/${id}`, {
+      .get<FindUserResDto>(`api/v1/users/${id}`, {
         ...options,
       })
       .json();

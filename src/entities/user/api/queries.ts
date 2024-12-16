@@ -6,48 +6,48 @@ import {
   UseSuspenseQueryOptions,
 } from '@tanstack/react-query';
 
-import { FindUserReqDtoDto, FindUserResDtoDto } from '@/shared/api';
+import { FindUserReqDto, FindUserResDto } from '@/shared/api';
 
 import { userApi } from './instance';
 
 export const USER_QUERY_KEY = {
-  GET_USERS: () => ['users'],
-  GET_USERS_ID: (id: FindUserReqDtoDto) => ['users', id],
+  GET_V1_USERS: () => ['v1', 'users'],
+  GET_V1_USERS_ID: (id: FindUserReqDto) => ['v1', 'users', id],
 };
 
 const queries = {
-  getUsers: () => ({
-    queryKey: USER_QUERY_KEY.GET_USERS(),
-    queryFn: () => userApi.getUsers(),
+  getApiV1Users: () => ({
+    queryKey: USER_QUERY_KEY.GET_V1_USERS(),
+    queryFn: () => userApi.getApiV1Users(),
   }),
-  getUsersById: (id: FindUserReqDtoDto) => ({
-    queryKey: USER_QUERY_KEY.GET_USERS_ID(id),
-    queryFn: () => userApi.getUsersById(id),
+  getApiV1UsersById: (id: FindUserReqDto) => ({
+    queryKey: USER_QUERY_KEY.GET_V1_USERS_ID(id),
+    queryFn: () => userApi.getApiV1UsersById(id),
   }),
 };
 
 // ---------------------- Query ------------------------------
 /**
  * @tags User
- * @request GET:/users */
-export const useGetUsersQuery = <TData = void>(
+ * @request GET:/api/v1/users */
+export const useGetApiV1UsersQuery = <TData = void>(
   options?: Omit<UseQueryOptions<void, DefaultError, TData>, 'queryKey' | 'queryFn'>
 ) => {
   return useQuery({
-    ...queries.getUsers(),
+    ...queries.getApiV1Users(),
     ...options,
   });
 };
 
 /**
  * @tags User
- * @request GET:/users/{id} */
-export const useGetUsersByIdQuery = <TData = FindUserResDtoDto>(
-  id: FindUserReqDtoDto,
-  options?: Omit<UseQueryOptions<FindUserResDtoDto, DefaultError, TData>, 'queryKey' | 'queryFn'>
+ * @request GET:/api/v1/users/{id} */
+export const useGetApiV1UsersByIdQuery = <TData = FindUserResDto>(
+  id: FindUserReqDto,
+  options?: Omit<UseQueryOptions<FindUserResDto, DefaultError, TData>, 'queryKey' | 'queryFn'>
 ) => {
   return useQuery({
-    ...queries.getUsersById(id),
+    ...queries.getApiV1UsersById(id),
     ...options,
   });
 };
@@ -55,28 +55,28 @@ export const useGetUsersByIdQuery = <TData = FindUserResDtoDto>(
 // ------------------ Suspense Query --------------------------
 /**
  * @tags User
- * @request GET:/users */
-export const useGetUsersSuspenseQuery = <TData = void>(
+ * @request GET:/api/v1/users */
+export const useGetApiV1UsersSuspenseQuery = <TData = void>(
   options?: Omit<UseSuspenseQueryOptions<void, DefaultError, TData>, 'queryKey' | 'queryFn'>
 ) => {
   return useSuspenseQuery({
-    ...queries.getUsers(),
+    ...queries.getApiV1Users(),
     ...options,
   });
 };
 
 /**
  * @tags User
- * @request GET:/users/{id} */
-export const useGetUsersByIdSuspenseQuery = <TData = FindUserResDtoDto>(
-  id: FindUserReqDtoDto,
+ * @request GET:/api/v1/users/{id} */
+export const useGetApiV1UsersByIdSuspenseQuery = <TData = FindUserResDto>(
+  id: FindUserReqDto,
   options?: Omit<
-    UseSuspenseQueryOptions<FindUserResDtoDto, DefaultError, TData>,
+    UseSuspenseQueryOptions<FindUserResDto, DefaultError, TData>,
     'queryKey' | 'queryFn'
   >
 ) => {
   return useSuspenseQuery({
-    ...queries.getUsersById(id),
+    ...queries.getApiV1UsersById(id),
     ...options,
   });
 };
