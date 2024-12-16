@@ -18,9 +18,10 @@ module.exports = {
     'plugin:import/recommended',
   ],
   parserOptions: {
-    project: './tsconfig.json',
-    ecmaVersion: 2021,
-    sourceType: 'module',
+    // project: './tsconfig.json',
+    project: true,
+    // ecmaVersion: 2021,
+    // sourceType: 'module',
   },
   globals: {
     React: true,
@@ -124,3 +125,4 @@ module.exports = {
     ],
   },
 };
+
