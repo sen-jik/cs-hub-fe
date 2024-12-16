@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 // import localFont from "next/font/local";
 
 import './globals.css';
@@ -18,16 +18,9 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-};
-
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="ko">
+    <html lang="en">
       <Head>
         <link
           rel="preload"
@@ -50,10 +43,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           crossOrigin="anonymous"
         />
       </Head>
-      <body
-      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className="flex h-full items-center justify-center bg-gray-50">
+        {/* 정중앙 고정된 500px 박스 */}
+        <div className="h-[100vh] w-full max-w-[500px] bg-white p-4">{children}</div>
       </body>
     </html>
   );
